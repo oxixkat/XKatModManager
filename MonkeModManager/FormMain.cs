@@ -668,13 +668,13 @@ namespace MonkeModManager
         private void CheckVersion()
         {
             UpdateStatus("Checking for updates...");
-            Int16 version = Convert.ToInt16(DownloadSite("https://raw.githubusercontent.com/DeadlyKitten/MonkeModManager/master/update.txt"));
+            Int16 version = Convert.ToInt16(DownloadSite("https://raw.githubusercontent.com/BzzzThe18th/MonkeModManager/master/update.txt"));
             if (version > CurrentVersion)
             {
                 this.Invoke((MethodInvoker)(() =>
                 {
                     MessageBox.Show("Your version of the mod installer is outdated! Please download the new one!", "Update available!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    Process.Start("https://github.com/DeadlyKitten/MonkeModManager/releases/latest");
+                    Process.Start("https://github.com/BzzzThe18th/MonkeModManager/releases/latest");
                     Process.GetCurrentProcess().Kill();
                     Environment.Exit(0);
                 }));
