@@ -693,9 +693,12 @@ namespace MonkeModManager
         {
             if (listViewMods.SelectedItems.Count > 0)
             {
-                ReleaseInfo release = (ReleaseInfo)listViewMods.SelectedItems[0].Tag;
-                UpdateStatus($"Opening GitHub page for {release.Name}");
-                Process.Start(string.Format("https://github.com/{0}", release.GitPath));
+                foreach (ListViewItem item in listViewMods.SelectedItems)
+                {
+                    ReleaseInfo release = (ReleaseInfo)item.Tag;
+                    UpdateStatus($"Opening GitHub page for {release.Name}");
+                    Process.Start(string.Format("https://github.com/{0}", release.GitPath));
+                }
             }
             
         }
