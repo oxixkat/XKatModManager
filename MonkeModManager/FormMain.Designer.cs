@@ -109,7 +109,7 @@
             this.labelStatus.AutoSize = true;
             this.labelStatus.ForeColor = System.Drawing.Color.White;
             this.labelStatus.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.labelStatus.Location = new System.Drawing.Point(0, 3);
+            this.labelStatus.Location = new System.Drawing.Point(0, 8);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(66, 13);
             this.labelStatus.TabIndex = 5;
