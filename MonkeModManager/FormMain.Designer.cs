@@ -36,7 +36,6 @@
             this.buttonInstall = new System.Windows.Forms.Button();
             this.labelStatus = new System.Windows.Forms.Label();
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.viewInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonRestoreMods = new System.Windows.Forms.Button();
             this.buttonBackupMods = new System.Windows.Forms.Button();
             this.buttonUninstallAll = new System.Windows.Forms.Button();
@@ -48,13 +47,15 @@
             this.listViewMods = new System.Windows.Forms.ListView();
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderAuthor = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.viewInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxDirectory
             // 
-            this.textBoxDirectory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+            this.textBoxDirectory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.textBoxDirectory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxDirectory.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.textBoxDirectory.Enabled = false;
             this.textBoxDirectory.ForeColor = System.Drawing.Color.White;
             this.textBoxDirectory.Location = new System.Drawing.Point(3, 32);
@@ -94,9 +95,9 @@
             this.buttonInstall.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.buttonInstall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonInstall.ForeColor = System.Drawing.Color.White;
-            this.buttonInstall.Location = new System.Drawing.Point(538, 154);
+            this.buttonInstall.Location = new System.Drawing.Point(538, 128);
             this.buttonInstall.Name = "buttonInstall";
-            this.buttonInstall.Size = new System.Drawing.Size(112, 23);
+            this.buttonInstall.Size = new System.Drawing.Size(112, 54);
             this.buttonInstall.TabIndex = 4;
             this.buttonInstall.Text = "Install / Update";
             this.buttonInstall.UseVisualStyleBackColor = false;
@@ -108,7 +109,7 @@
             this.labelStatus.AutoSize = true;
             this.labelStatus.ForeColor = System.Drawing.Color.White;
             this.labelStatus.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.labelStatus.Location = new System.Drawing.Point(433, 8);
+            this.labelStatus.Location = new System.Drawing.Point(0, 3);
             this.labelStatus.Name = "labelStatus";
             this.labelStatus.Size = new System.Drawing.Size(66, 13);
             this.labelStatus.TabIndex = 5;
@@ -123,15 +124,6 @@
             this.contextMenuStripMain.Name = "contextMenuStripMain";
             this.contextMenuStripMain.Size = new System.Drawing.Size(124, 26);
             // 
-            // viewInfoToolStripMenuItem
-            // 
-            this.viewInfoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.viewInfoToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.viewInfoToolStripMenuItem.Name = "viewInfoToolStripMenuItem";
-            this.viewInfoToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-            this.viewInfoToolStripMenuItem.Text = "View Info";
-            this.viewInfoToolStripMenuItem.Click += new System.EventHandler(this.viewInfoToolStripMenuItem_Click);
-            // 
             // buttonRestoreMods
             // 
             this.buttonRestoreMods.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -139,9 +131,9 @@
             this.buttonRestoreMods.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.buttonRestoreMods.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRestoreMods.ForeColor = System.Drawing.Color.White;
-            this.buttonRestoreMods.Location = new System.Drawing.Point(538, 334);
+            this.buttonRestoreMods.Location = new System.Drawing.Point(538, 308);
             this.buttonRestoreMods.Name = "buttonRestoreMods";
-            this.buttonRestoreMods.Size = new System.Drawing.Size(112, 23);
+            this.buttonRestoreMods.Size = new System.Drawing.Size(112, 61);
             this.buttonRestoreMods.TabIndex = 3;
             this.buttonRestoreMods.Text = "Restore Mods";
             this.buttonRestoreMods.UseVisualStyleBackColor = false;
@@ -154,10 +146,10 @@
             this.buttonBackupMods.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.buttonBackupMods.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonBackupMods.ForeColor = System.Drawing.Color.White;
-            this.buttonBackupMods.Location = new System.Drawing.Point(538, 274);
+            this.buttonBackupMods.Location = new System.Drawing.Point(538, 248);
             this.buttonBackupMods.Name = "buttonBackupMods";
             this.buttonBackupMods.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.buttonBackupMods.Size = new System.Drawing.Size(112, 23);
+            this.buttonBackupMods.Size = new System.Drawing.Size(112, 54);
             this.buttonBackupMods.TabIndex = 1;
             this.buttonBackupMods.Text = "Backup Mods";
             this.buttonBackupMods.UseVisualStyleBackColor = false;
@@ -170,9 +162,9 @@
             this.buttonUninstallAll.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.buttonUninstallAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonUninstallAll.ForeColor = System.Drawing.Color.White;
-            this.buttonUninstallAll.Location = new System.Drawing.Point(538, 214);
+            this.buttonUninstallAll.Location = new System.Drawing.Point(538, 188);
             this.buttonUninstallAll.Name = "buttonUninstallAll";
-            this.buttonUninstallAll.Size = new System.Drawing.Size(112, 23);
+            this.buttonUninstallAll.Size = new System.Drawing.Size(112, 54);
             this.buttonUninstallAll.TabIndex = 0;
             this.buttonUninstallAll.Text = "Uninstall All Mods";
             this.buttonUninstallAll.UseVisualStyleBackColor = false;
@@ -186,9 +178,9 @@
             this.buttonModInfo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.buttonModInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonModInfo.ForeColor = System.Drawing.Color.White;
-            this.buttonModInfo.Location = new System.Drawing.Point(538, 94);
+            this.buttonModInfo.Location = new System.Drawing.Point(538, 68);
             this.buttonModInfo.Name = "buttonModInfo";
-            this.buttonModInfo.Size = new System.Drawing.Size(112, 23);
+            this.buttonModInfo.Size = new System.Drawing.Size(112, 54);
             this.buttonModInfo.TabIndex = 9;
             this.buttonModInfo.Text = "View Mod Info";
             this.buttonModInfo.UseVisualStyleBackColor = false;
@@ -202,9 +194,9 @@
             this.buttonToggleMods.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.buttonToggleMods.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonToggleMods.ForeColor = System.Drawing.Color.White;
-            this.buttonToggleMods.Location = new System.Drawing.Point(538, 34);
+            this.buttonToggleMods.Location = new System.Drawing.Point(538, 8);
             this.buttonToggleMods.Name = "buttonToggleMods";
-            this.buttonToggleMods.Size = new System.Drawing.Size(112, 23);
+            this.buttonToggleMods.Size = new System.Drawing.Size(112, 54);
             this.buttonToggleMods.TabIndex = 10;
             this.buttonToggleMods.Text = "Disable Mods";
             this.buttonToggleMods.UseVisualStyleBackColor = false;
@@ -254,9 +246,9 @@
             // 
             // listViewMods
             // 
-            this.listViewMods.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.listViewMods.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            this.listViewMods.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listViewMods.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listViewMods.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
+            this.listViewMods.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listViewMods.CheckBoxes = true;
             this.listViewMods.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderName,
@@ -268,7 +260,10 @@
             this.listViewMods.HideSelection = false;
             this.listViewMods.Location = new System.Drawing.Point(0, 89);
             this.listViewMods.Name = "listViewMods";
-            this.listViewMods.Size = new System.Drawing.Size(532, 292);
+            this.listViewMods.ShowGroups = false;
+            this.listViewMods.ShowItemToolTips = true;
+            this.listViewMods.Size = new System.Drawing.Size(532, 290);
+            this.listViewMods.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listViewMods.TabIndex = 0;
             this.listViewMods.UseCompatibleStateImageBehavior = false;
             this.listViewMods.View = System.Windows.Forms.View.Details;
@@ -286,6 +281,18 @@
             // 
             this.columnHeaderAuthor.Text = "Author";
             this.columnHeaderAuthor.Width = 162;
+            // 
+            // viewInfoToolStripMenuItem
+            // 
+            this.viewInfoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.viewInfoToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.viewInfoToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.viewInfoToolStripMenuItem.Name = "viewInfoToolStripMenuItem";
+            this.viewInfoToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.viewInfoToolStripMenuItem.Text = "View Info";
+            this.viewInfoToolStripMenuItem.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.viewInfoToolStripMenuItem.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.viewInfoToolStripMenuItem.Click += new System.EventHandler(this.viewInfoToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -328,7 +335,6 @@
         private System.Windows.Forms.Button buttonInstall;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripMain;
-        private System.Windows.Forms.ToolStripMenuItem viewInfoToolStripMenuItem;
         private System.Windows.Forms.Button buttonModInfo;
         private System.Windows.Forms.Button buttonUninstallAll;
         private System.Windows.Forms.Button buttonBackupMods;
@@ -340,6 +346,7 @@
         public System.Windows.Forms.ListView listViewMods;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ColumnHeader columnHeaderAuthor;
+        private System.Windows.Forms.ToolStripMenuItem viewInfoToolStripMenuItem;
     }
 }
 
