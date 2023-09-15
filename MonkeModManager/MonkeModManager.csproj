@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="monke_transparent.ico" />
+    <None Include="monke_transparent.png" />
     <EmbeddedResource Include="monke.ico" />
     <Content Include="monke.png" />
   </ItemGroup>

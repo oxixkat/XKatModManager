@@ -38,8 +38,6 @@ namespace MonkeModManager
             LocationHandler();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             releases = new List<ReleaseInfo>();
-            var version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            labelVersion.Text = "Monke Mod Manager v" + version.Substring(0, version.Length - 2);
             if (!File.Exists(Path.Combine(InstallDirectory, "winhttp.dll")))
             {
                 if (File.Exists(Path.Combine(InstallDirectory, "mods.disable")))
@@ -152,7 +150,6 @@ namespace MonkeModManager
                     }
                 }
 
-                tabControlMain.Enabled = true;
                 buttonInstall.Enabled = true;
 
             }));
@@ -233,17 +230,6 @@ namespace MonkeModManager
         #endregion // Installation
 
         #region UIEvents
-
-        private void tabControl_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            TabPage page = tabControlMain.TabPages[e.Index];
-            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(40,40,40)), e.Bounds);
-
-            Rectangle paddedBounds = e.Bounds;
-            int yOffset = (e.State == DrawItemState.Selected) ? -2 : 1;
-            paddedBounds.Offset(1, yOffset);
-            TextRenderer.DrawText(e.Graphics, page.Text, e.Font, paddedBounds, page.ForeColor);
-        }
 
         private void buttonInstall_Click(object sender, EventArgs e)
         {
