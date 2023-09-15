@@ -1,5 +1,5 @@
 # Monke Mod Manager
-[Preview](https://github.com/BzzzThe18th/MonkeModManager/assets/69125495/d2607f22-ce5d-43cc-8df9-e9a974df716f)
+![Preview](https://github.com/BzzzThe18th/MonkeModManager/assets/69125495/d2607f22-ce5d-43cc-8df9-e9a974df716f)
 
 
 
