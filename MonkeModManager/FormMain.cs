@@ -20,7 +20,7 @@ namespace MonkeModManager
     {
 
         private const string BaseEndpoint = "https://api.github.com/repos/";
-        private const Int16 CurrentVersion = 6;
+        private const Int16 CurrentVersion = 8;
         private List<ReleaseInfo> releases;
         Dictionary<string, int> groups = new Dictionary<string, int>();
         private string InstallDirectory = @"";
@@ -124,6 +124,7 @@ namespace MonkeModManager
                 foreach (ReleaseInfo release in releases)
                 {
                     ListViewItem item = new ListViewItem();
+                    item.ForeColor = Color.White;
                     item.Text = release.Name;
                     if (!String.IsNullOrEmpty(release.Version)) item.Text = $"{release.Name} - {release.Version}";
                     if (!String.IsNullOrEmpty(release.Tag)) { item.Text = string.Format("{0} - ({1})",release.Name, release.Tag); };
@@ -294,16 +295,16 @@ namespace MonkeModManager
                     {
                         if (e.Item.Checked)
                         {
-                            item.Checked = true;/*
-                            item.ForeColor = System.Drawing.Color.DimGray;*/
+                            item.Checked = true;
+                            item.ForeColor = Color.LightGray;
                         }
                         else
                         {
                             release.Install = false;
                             if (releases.Count(x => plugin.Dependents.Contains(x.Name) && x.Install) <= 1)
                             {
-                                item.Checked = false;/*
-                                item.ForeColor = System.Drawing.Color.Black;*/
+                                item.Checked = false;
+                                item.ForeColor = Color.Gray;
                             }
                         }
                     }
@@ -574,7 +575,7 @@ namespace MonkeModManager
 
         private void buttonDiscordLink_Click(object sender, EventArgs e)
         {
-            Process.Start("https://discord.gg/ux4ZbBC6JQ");
+            Process.Start("https://discord.gg/monkemod");
         }
 
         #endregion // UIEvents
@@ -595,9 +596,9 @@ namespace MonkeModManager
                 RQuest.Referer = "";
                 RQuest.UserAgent = "Monke-Mod-Manager";
                 RQuest.Proxy = null;
-#if DEBUG
+/*#if DEBUG
                 RQuest.Headers.Add("Authorization", $"Token {File.ReadAllText("../../token.txt")}");
-#endif
+#endif*/
                 HttpWebResponse Response = (HttpWebResponse)RQuest.GetResponse();
                 StreamReader Sr = new StreamReader(Response.GetResponseStream());
                 string Code = Sr.ReadToEnd();
@@ -612,7 +613,7 @@ namespace MonkeModManager
                 }
                 else
                 {
-                    MessageBox.Show("Failed to update version info, please check your internet connection", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(/*"Failed to update version info, please check your internet connection"*/ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 Process.GetCurrentProcess().Kill();
                 return null;

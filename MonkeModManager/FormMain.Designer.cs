@@ -135,6 +135,7 @@
             this.tabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControlMain.ContextMenuStrip = this.contextMenuStripMain;
             this.tabControlMain.Controls.Add(this.Plugins);
             this.tabControlMain.Controls.Add(this.Utilities);
             this.tabControlMain.Location = new System.Drawing.Point(10, 53);
@@ -148,6 +149,7 @@
             // 
             this.Plugins.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(38)))), ((int)(((byte)(38)))));
             this.Plugins.Controls.Add(this.listViewMods);
+            this.Plugins.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Plugins.ForeColor = System.Drawing.Color.White;
             this.Plugins.Location = new System.Drawing.Point(4, 22);
             this.Plugins.Name = "Plugins";
@@ -171,10 +173,11 @@
             this.listViewMods.ContextMenuStrip = this.contextMenuStripMain;
             this.listViewMods.ForeColor = System.Drawing.Color.White;
             this.listViewMods.FullRowSelect = true;
+            this.listViewMods.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listViewMods.HideSelection = false;
-            this.listViewMods.Location = new System.Drawing.Point(6, 6);
+            this.listViewMods.Location = new System.Drawing.Point(0, 0);
             this.listViewMods.Name = "listViewMods";
-            this.listViewMods.Size = new System.Drawing.Size(524, 244);
+            this.listViewMods.Size = new System.Drawing.Size(536, 256);
             this.listViewMods.TabIndex = 0;
             this.listViewMods.UseCompatibleStateImageBehavior = false;
             this.listViewMods.View = System.Windows.Forms.View.Details;
@@ -223,6 +226,7 @@
             this.Utilities.Controls.Add(this.buttonBackupCosmetics);
             this.Utilities.Controls.Add(this.buttonBackupMods);
             this.Utilities.Controls.Add(this.buttonUninstallAll);
+            this.Utilities.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Utilities.ForeColor = System.Drawing.Color.White;
             this.Utilities.Location = new System.Drawing.Point(4, 22);
             this.Utilities.Name = "Utilities";
@@ -467,7 +471,6 @@
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.TabControl tabControlMain;
         private System.Windows.Forms.TabPage Plugins;
-        private System.Windows.Forms.ListView listViewMods;
         private System.Windows.Forms.ColumnHeader columnHeaderAuthor;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripMain;
         private System.Windows.Forms.ToolStripMenuItem viewInfoToolStripMenuItem;
@@ -489,6 +492,7 @@
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.Button buttonToggleMods;
         private System.Windows.Forms.ColumnHeader columnHeaderName;
+        private System.Windows.Forms.ListView listViewMods;
     }
 }
 
