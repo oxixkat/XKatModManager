@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using MonkeModManager.Internals.SimpleJSON;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace MonkeModManager
 {
@@ -44,8 +45,8 @@ namespace MonkeModManager
                 if (File.Exists(Path.Combine(InstallDirectory, "mods.disable")))
                 {
                     buttonToggleMods.Text = "Enable Mods";
-                    modsDisabled = true;
-                    buttonToggleMods.BackColor = System.Drawing.Color.IndianRed;
+                    modsDisabled = true;/*
+                    buttonToggleMods.BackColor = System.Drawing.Color.IndianRed;*/
                     buttonToggleMods.Enabled = true;
                 }
                 else
@@ -67,12 +68,9 @@ namespace MonkeModManager
 
         private void LoadReleases()
         {
-#if !DEBUG
             var decodedMods = JSON.Parse(DownloadSite("https://raw.githubusercontent.com/DeadlyKitten/MonkeModInfo/master/modinfo.json"));
             var decodedGroups = JSON.Parse(DownloadSite("https://raw.githubusercontent.com/DeadlyKitten/MonkeModInfo/master/groupinfo.json"));
-#else
-            var decoded = JSON.Parse(File.ReadAllText("C:/Users/Steven/Desktop/testmods.json"));
-#endif
+
             var allMods = decodedMods.AsArray;
             var allGroups = decodedGroups.AsArray;
 
@@ -235,6 +233,17 @@ namespace MonkeModManager
 
         #region UIEvents
 
+        private void tabControl_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            TabPage page = tabControlMain.TabPages[e.Index];
+            e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(40,40,40)), e.Bounds);
+
+            Rectangle paddedBounds = e.Bounds;
+            int yOffset = (e.State == DrawItemState.Selected) ? -2 : 1;
+            paddedBounds.Offset(1, yOffset);
+            TextRenderer.DrawText(e.Graphics, page.Text, e.Font, paddedBounds, page.ForeColor);
+        }
+
         private void buttonInstall_Click(object sender, EventArgs e)
         {
             new Thread(() =>
@@ -285,16 +294,16 @@ namespace MonkeModManager
                     {
                         if (e.Item.Checked)
                         {
-                            item.Checked = true;
-                            item.ForeColor = System.Drawing.Color.DimGray;
+                            item.Checked = true;/*
+                            item.ForeColor = System.Drawing.Color.DimGray;*/
                         }
                         else
                         {
                             release.Install = false;
                             if (releases.Count(x => plugin.Dependents.Contains(x.Name) && x.Install) <= 1)
                             {
-                                item.Checked = false;
-                                item.ForeColor = System.Drawing.Color.Black;
+                                item.Checked = false;/*
+                                item.ForeColor = System.Drawing.Color.Black;*/
                             }
                         }
                     }
@@ -745,8 +754,8 @@ namespace MonkeModManager
         {
             if (release.Name.Contains("BepInEx"))
             {
-                item.Checked = true;
-                item.ForeColor = System.Drawing.Color.DimGray;
+                item.Checked = true;/*
+                item.ForeColor = System.Drawing.Color.DimGray;*/
             }
             else
             {
@@ -832,8 +841,8 @@ namespace MonkeModManager
                 if (File.Exists(Path.Combine(InstallDirectory, "mods.disable")))
                 {
                     File.Move(Path.Combine(InstallDirectory, "mods.disable"), Path.Combine(InstallDirectory, "winhttp.dll"));
-                    buttonToggleMods.Text = "Disable Mods";
-                    buttonToggleMods.BackColor = System.Drawing.Color.Transparent;
+                    buttonToggleMods.Text = "Disable Mods";/*
+                    buttonToggleMods.BackColor = System.Drawing.Color.Transparent;*/
                     modsDisabled = false;
                     UpdateStatus("Enabled mods!");
                 }
@@ -843,12 +852,17 @@ namespace MonkeModManager
                 if (File.Exists(Path.Combine(InstallDirectory, "winhttp.dll")))
                 {
                     File.Move(Path.Combine(InstallDirectory, "winhttp.dll"), Path.Combine(InstallDirectory, "mods.disable"));
-                    buttonToggleMods.Text = "Enable Mods";
-                    buttonToggleMods.BackColor = System.Drawing.Color.IndianRed;
+                    buttonToggleMods.Text = "Enable Mods";/*
+                    buttonToggleMods.BackColor = System.Drawing.Color.IndianRed;*/
                     modsDisabled = true;
                     UpdateStatus("Disabled mods!");
                 }
             }
+        }
+
+        private void listViewMods_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

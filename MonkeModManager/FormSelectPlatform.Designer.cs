@@ -57,6 +57,7 @@
             // 
             // buttonConfirm
             // 
+            this.buttonConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonConfirm.Location = new System.Drawing.Point(109, 60);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(75, 23);
@@ -69,12 +70,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(292, 95);
             this.Controls.Add(this.buttonConfirm);
             this.Controls.Add(this.radioButtonOculus);
             this.Controls.Add(this.radioButtonSteam);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSelectPlatform";
