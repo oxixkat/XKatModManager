@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using MonkeModManager.Internals.SimpleJSON;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace MonkeModManager
 {
@@ -28,13 +29,30 @@ namespace MonkeModManager
         public bool isSteam = true;
         public bool platformDetected = false;
 
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn
+        (
+            int nLeftRect,     // x-coordinate of upper-left corner
+            int nTopRect,      // y-coordinate of upper-left corner
+            int nRightRect,    // x-coordinate of lower-right corner
+            int nBottomRect,   // y-coordinate of lower-right corner
+            int nWidthEllipse, // width of ellipse
+            int nHeightEllipse // height of ellipse
+        );
+
         public FormMain()
         {
             InitializeComponent();
+            Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 20, 20));
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            foreach(Button btn in Controls.OfType<Button>())
+            {
+                btn.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, btn.Width, btn.Height, 13, 13));
+            }
+
             LocationHandler();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             releases = new List<ReleaseInfo>();
@@ -43,8 +61,7 @@ namespace MonkeModManager
                 if (File.Exists(Path.Combine(InstallDirectory, "mods.disable")))
                 {
                     buttonToggleMods.Text = "Enable Mods";
-                    modsDisabled = true;/*
-                    buttonToggleMods.BackColor = System.Drawing.Color.IndianRed;*/
+                    modsDisabled = true;
                     buttonToggleMods.Enabled = true;
                 }
                 else
@@ -76,7 +93,6 @@ namespace MonkeModManager
             {
                 JSONNode current = allMods[i];
                 ReleaseInfo release = new ReleaseInfo(current["name"], current["author"], current["version"], current["group"], current["download_url"], current["install_location"], current["git_path"], current["dependencies"].AsArray);
-                //UpdateReleaseInfo(ref release);
                 releases.Add(release);
             }
 
@@ -99,7 +115,6 @@ namespace MonkeModManager
                     releases.Where(x => x.Name == dep).FirstOrDefault()?.Dependents.Add(release.Name);
                 }
             }
-            //WriteReleasesToDisk();
         }
 
         private void LoadRequiredPlugins()
@@ -122,6 +137,7 @@ namespace MonkeModManager
                 foreach (ReleaseInfo release in releases)
                 {
                     ListViewItem item = new ListViewItem();
+                    item.BackColor = Color.FromArgb(28,28,28);
                     item.ForeColor = Color.White;
                     item.Text = release.Name;
                     if (!String.IsNullOrEmpty(release.Version)) item.Text = $"{release.Name} - {release.Version}";
@@ -142,11 +158,6 @@ namespace MonkeModManager
                     {
                         int index = groups[release.Group];
                         item.Group = listViewMods.Groups[index];
-                    }
-                    else
-                    {
-                        //int index = listViewMods.Groups.Add(new ListViewGroup(release.Group, HorizontalAlignment.Left));
-                        //item.Group = listViewMods.Groups[index];
                     }
                 }
 
@@ -231,6 +242,23 @@ namespace MonkeModManager
 
         #region UIEvents
 
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
         private void buttonInstall_Click(object sender, EventArgs e)
         {
             new Thread(() =>
@@ -282,7 +310,6 @@ namespace MonkeModManager
                         if (e.Item.Checked)
                         {
                             item.Checked = true;
-                            item.ForeColor = Color.LightGray;
                         }
                         else
                         {
@@ -290,7 +317,6 @@ namespace MonkeModManager
                             if (releases.Count(x => plugin.Dependents.Contains(x.Name) && x.Install) <= 1)
                             {
                                 item.Checked = false;
-                                item.ForeColor = Color.Gray;
                             }
                         }
                     }
@@ -306,7 +332,7 @@ namespace MonkeModManager
                 }
             }
 
-            if (release.Name.Contains("BepInEx")) { e.Item.Checked = true; };
+            if (release.Name.Contains("BepInEx") || release.Name.Contains("Utilla")) { e.Item.Checked = true; };
             release.Install = e.Item.Checked;
         }
 
@@ -325,22 +351,32 @@ namespace MonkeModManager
              OpenLinkFromRelease();
          }
 
+        private void clickQuit(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void clickMinimize(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
         private void listViewMods_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             if (listViewMods.SelectedItems.Count > 0)
             {
-                buttonModInfo.Enabled = true;
+                buttonModInfo.ForeColor = Color.White;
             }
             else
             {
-                buttonModInfo.Enabled = false;
+                buttonModInfo.ForeColor = Color.LightGray;
             }
         }
 
         private void buttonUninstallAll_Click(object sender, EventArgs e)
         {
             var confirmResult = MessageBox.Show(
-                "You are about to delete all your mods (including hats and materials). This cannot be undone!\n\nAre you sure you wish to continue?",
+                "You are about to delete all your mods (including any saved data in your plugins). This cannot be undone!\n\nAre you sure you wish to continue?",
                 "Confirm Delete",
                 MessageBoxButtons.YesNo);
 
@@ -405,43 +441,6 @@ namespace MonkeModManager
 
         }
 
-        private void buttonBackupCosmetics_Click(object sender, EventArgs e)
-        {
-            var pluginsPath = Path.Combine(InstallDirectory, @"BepInEx\plugins");
-
-            SaveFileDialog saveFileDialog = new SaveFileDialog
-            {
-                InitialDirectory = InstallDirectory,
-                FileName = $"Cosmetics Backup",
-                Filter = "ZIP Folder (.zip)|*.zip",
-                Title = "Save Cosmetics Backup"
-            };
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK && saveFileDialog.FileName != "")
-            {
-                UpdateStatus("Backing up cosmetics...");
-                if (File.Exists(saveFileDialog.FileName)) File.Delete(saveFileDialog.FileName);
-                try
-                {
-                    ZipFile.CreateFromDirectory(Path.Combine(pluginsPath, @"GorillaCosmetics\Hats"), saveFileDialog.FileName, CompressionLevel.Optimal, true);
-                    using (ZipArchive archive = ZipFile.Open(saveFileDialog.FileName, ZipArchiveMode.Update))
-                    {
-                        foreach (var f in Directory.GetFiles(Path.Combine(pluginsPath, @"GorillaCosmetics\Materials")))
-                        {
-                            archive.CreateEntryFromFile(f, $"{Path.Combine("Materials", Path.GetFileName(f))}");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    UpdateStatus("Failed to restore cosmetics.");
-                    return;
-                }
-                UpdateStatus("Backed up cosmetics!");
-            }
-        }
-
         private void buttonRestoreMods_Click(object sender, EventArgs e)
         {
             using (var fileDialog = new OpenFileDialog())
@@ -486,50 +485,6 @@ namespace MonkeModManager
             }
         }
 
-        private void buttonRestoreCosmetics_Click(object sender, EventArgs e)
-        {
-            using (var fileDialog = new OpenFileDialog())
-            {
-                fileDialog.InitialDirectory = InstallDirectory;
-                fileDialog.FileName = "Cosmetics Backup.zip";
-                fileDialog.Filter = "ZIP Folder (.zip)|*.zip";
-                fileDialog.FilterIndex = 1;
-                if (fileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    if (!Path.GetExtension(fileDialog.FileName).Equals(".zip", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        MessageBox.Show("Invalid file!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        UpdateStatus("Failed to restore co0smetics.");
-                        return;
-                    }
-                    var cosmeticsPath = Path.Combine(InstallDirectory, @"BepInEx\plugins\GorillaCosmetics");
-                    try
-                    {
-                        UpdateStatus("Restoring cosmetics...");
-                        using (var archive = ZipFile.OpenRead(fileDialog.FileName))
-                        {
-                            foreach (var entry in archive.Entries)
-                            {
-                                var directory = Path.Combine(InstallDirectory, @"BepInEx\plugins\GorillaCosmetics", Path.GetDirectoryName(entry.FullName));
-                                if (!Directory.Exists(directory))
-                                {
-                                    Directory.CreateDirectory(directory);
-                                }
-
-                                entry.ExtractToFile(Path.Combine(cosmeticsPath, entry.FullName), true);
-                            }
-                        }
-                        UpdateStatus("Successfully restored cosmetics!");
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Something went wrong!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        UpdateStatus("Failed to restore cosmetics.");
-                    }
-                }
-            }
-        }
-
         #region Folders
 
         private void buttonOpenGameFolder_Click(object sender, EventArgs e)
@@ -545,9 +500,9 @@ namespace MonkeModManager
                 Process.Start(configDirectory);
         }
 
-        private void buttonOpenBepInExFolder_Click(object sender, EventArgs e)
+        private void buttonOpenModsFolder_Click(object sender, EventArgs e)
         {
-            var BepInExDirectory = Path.Combine(InstallDirectory, "BepInEx");
+            var BepInExDirectory = Path.Combine(InstallDirectory, @"BepInEx\plugins");
             if (Directory.Exists(BepInExDirectory))
                 Process.Start(BepInExDirectory);
         }
@@ -582,9 +537,6 @@ namespace MonkeModManager
                 RQuest.Referer = "";
                 RQuest.UserAgent = "Monke-Mod-Manager";
                 RQuest.Proxy = null;
-/*#if DEBUG
-                RQuest.Headers.Add("Authorization", $"Token {File.ReadAllText("../../token.txt")}");
-#endif*/
                 HttpWebResponse Response = (HttpWebResponse)RQuest.GetResponse();
                 StreamReader Sr = new StreamReader(Response.GetResponseStream());
                 string Code = Sr.ReadToEnd();
@@ -595,11 +547,11 @@ namespace MonkeModManager
             {
                 if (ex.Message.Contains("403"))
                 {
-                    MessageBox.Show("Failed to update version info, GitHub has rate limited you, please check back in 15 - 30 minutes", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to update version info, GitHub has rate limited you, please check back in 15 - 30 minutes. If this problem persists, share this error to helpers in the modding discord:\n{ex.Message}", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show(/*"Failed to update version info, please check your internet connection"*/ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Failed to update version info, please check your internet connection. If this problem persists, share this error to helpers in the modding discord:\n{ex.Message}", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 Process.GetCurrentProcess().Kill();
                 return null;
@@ -742,10 +694,10 @@ namespace MonkeModManager
         }
         private void CheckDefaultMod(ReleaseInfo release, ListViewItem item)
         {
-            if (release.Name.Contains("BepInEx"))
+            if (release.Name.Contains("BepInEx") || release.Name.Contains("Utilla"))
             {
-                item.Checked = true;/*
-                item.ForeColor = System.Drawing.Color.DimGray;*/
+                item.Checked = true;
+                item.ForeColor = Color.LightGray;
             }
             else
             {
@@ -831,8 +783,8 @@ namespace MonkeModManager
                 if (File.Exists(Path.Combine(InstallDirectory, "mods.disable")))
                 {
                     File.Move(Path.Combine(InstallDirectory, "mods.disable"), Path.Combine(InstallDirectory, "winhttp.dll"));
-                    buttonToggleMods.Text = "Disable Mods";/*
-                    buttonToggleMods.BackColor = System.Drawing.Color.Transparent;*/
+                    buttonToggleMods.Text = "Disable Mods";
+                    buttonToggleMods.BackColor = Color.FromArgb(120, 0, 0);
                     modsDisabled = false;
                     UpdateStatus("Enabled mods!");
                 }
@@ -842,17 +794,12 @@ namespace MonkeModManager
                 if (File.Exists(Path.Combine(InstallDirectory, "winhttp.dll")))
                 {
                     File.Move(Path.Combine(InstallDirectory, "winhttp.dll"), Path.Combine(InstallDirectory, "mods.disable"));
-                    buttonToggleMods.Text = "Enable Mods";/*
-                    buttonToggleMods.BackColor = System.Drawing.Color.IndianRed;*/
+                    buttonToggleMods.Text = "Enable Mods";
+                    buttonToggleMods.BackColor = Color.FromArgb(0, 120, 0);
                     modsDisabled = true;
                     UpdateStatus("Disabled mods!");
                 }
             }
-        }
-
-        private void listViewMods_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 
