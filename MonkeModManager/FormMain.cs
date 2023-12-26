@@ -21,7 +21,7 @@ namespace MonkeModManager
     {
 
         private const string BaseEndpoint = "https://api.github.com/repos/";
-        private const Int16 CurrentVersion = 2;
+        private const Int16 CurrentVersion = 3;
         private List<ReleaseInfo> releases;
         Dictionary<string, int> groups = new Dictionary<string, int>();
         private string InstallDirectory = @"";
@@ -598,7 +598,7 @@ namespace MonkeModManager
                     if (fileDialog.ShowDialog() == DialogResult.OK)
                     {
                         string path = fileDialog.FileName;
-                        if (Path.GetFileName(path).Equals("Gorilla Tag.exe"))
+                        if (Path.GetFileName(path).Equals("GorillaTag.exe") | Path.GetFileName(path).Equals("GorillaTag.exe"))
                         {
                             InstallDirectory = Path.GetDirectoryName(path);
                             textBoxDirectory.Text = InstallDirectory;
@@ -606,7 +606,7 @@ namespace MonkeModManager
                         }
                         else
                         {
-                            MessageBox.Show("That's not Gorilla Tag.exe! please try again!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("That's not the Gorilla Tag exectuable! please try again!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     else
