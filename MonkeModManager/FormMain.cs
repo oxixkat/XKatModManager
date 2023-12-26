@@ -271,20 +271,20 @@ namespace MonkeModManager
         {
             using (var fileDialog = new OpenFileDialog())
             {
-                fileDialog.FileName = "Gorilla Tag.exe";
+                fileDialog.FileName = "GorillaTag.exe";
                 fileDialog.Filter = "Exe Files (.exe)|*.exe|All Files (*.*)|*.*";
                 fileDialog.FilterIndex = 1;
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string path = fileDialog.FileName;
-                    if (Path.GetFileName(path).Equals("Gorilla Tag.exe"))
+                    if (Path.GetFileName(path).Equals("GorillaTag.exe"))
                     {
                         InstallDirectory = Path.GetDirectoryName(path);
                         textBoxDirectory.Text = InstallDirectory;
                     }
                     else
                     {
-                        MessageBox.Show("That's not Gorilla Tag.exe! please try again!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("That's not GorillaTag.exe! please try again!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                 }
@@ -657,7 +657,7 @@ namespace MonkeModManager
 
 #endregion // Helpers
 
-#region Registry
+        #region Registry
 
         private void LocationHandler()
         {
@@ -706,7 +706,7 @@ namespace MonkeModManager
         }
 #endregion // Registry
 
-#region RegHelper
+        #region RegHelper
         enum RegSAM
         {
             QueryValue = 0x0001,
@@ -774,7 +774,7 @@ namespace MonkeModManager
             }
         }
 
-#endregion // RegHelper
+        #endregion // RegHelper
 
         private void buttonToggleMods_Click(object sender, EventArgs e)
         {
