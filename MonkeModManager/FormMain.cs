@@ -21,7 +21,7 @@ namespace MonkeModManager
     {
 
         private const string BaseEndpoint = "https://api.github.com/repos/";
-        private const Int16 CurrentVersion = 8;
+        private const Int16 CurrentVersion = 2;
         private List<ReleaseInfo> releases;
         Dictionary<string, int> groups = new Dictionary<string, int>();
         private string InstallDirectory = @"";
