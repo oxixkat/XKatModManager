@@ -598,7 +598,7 @@ namespace MonkeModManager
                     if (fileDialog.ShowDialog() == DialogResult.OK)
                     {
                         string path = fileDialog.FileName;
-                        if (Path.GetFileName(path).Equals("GorillaTag.exe") | Path.GetFileName(path).Equals("GorillaTag.exe"))
+                        if (Path.GetFileName(path).Equals("Gorilla Tag.exe") | Path.GetFileName(path).Equals("GorillaTag.exe"))
                         {
                             InstallDirectory = Path.GetDirectoryName(path);
                             textBoxDirectory.Text = InstallDirectory;
