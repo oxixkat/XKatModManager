@@ -271,20 +271,20 @@ namespace MonkeModManager
         {
             using (var fileDialog = new OpenFileDialog())
             {
-                fileDialog.FileName = "GorillaTag.exe";
+                fileDialog.FileName = "GorillaTag Executable";
                 fileDialog.Filter = "Exe Files (.exe)|*.exe|All Files (*.*)|*.*";
                 fileDialog.FilterIndex = 1;
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string path = fileDialog.FileName;
-                    if (Path.GetFileName(path).Equals("GorillaTag.exe"))
+                    if (Path.GetFileName(path).Equals("Gorilla Tag.exe") | Path.GetFileName(path).Equals("GorillaTag.exe"))
                     {
                         InstallDirectory = Path.GetDirectoryName(path);
                         textBoxDirectory.Text = InstallDirectory;
                     }
                     else
                     {
-                        MessageBox.Show("That's not GorillaTag.exe! please try again!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("That's not the Gorilla Tag exectuable! please try again!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                 }
@@ -592,7 +592,7 @@ namespace MonkeModManager
             {
                 using (var fileDialog = new OpenFileDialog())
                 {
-                    fileDialog.FileName = "Gorilla Tag.exe";
+                    fileDialog.FileName = "Gorilla Tag Executable";
                     fileDialog.Filter = "Exe Files (.exe)|*.exe|All Files (*.*)|*.*";
                     fileDialog.FilterIndex = 1;
                     if (fileDialog.ShowDialog() == DialogResult.OK)
@@ -666,7 +666,7 @@ namespace MonkeModManager
             {
                 if (Directory.Exists(steam))
                 {
-                    if (File.Exists(steam + @"\Gorilla Tag.exe"))
+                    if (File.Exists(steam + @"\Gorilla Tag.exe") | File.Exists(steam + @"\GorillaTag.exe"))
                     {
                         textBoxDirectory.Text = steam;
                         InstallDirectory = steam;
