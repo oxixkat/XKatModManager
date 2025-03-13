@@ -20,6 +20,18 @@
          ]
       },
       {
+         "name" : "IIStupid Menu",
+         "tag" : "",
+         "gitPath" : "iiDk-the-actual/iis.Stupid.Menu",
+         "releaseId" : 0,
+         "author" : "iiDk",
+         "group" : "Gameplay",
+         "dependencies" : [
+          "Newtonsoft.JSON",
+          "Utilla"
+         ]
+      },
+      {
          "name" : "Monke Map Loader",
          "tag" : "",
          "gitPath" : "Vadix88/MonkeMapLoader",
@@ -46,9 +58,9 @@
       {
          "name" : "Utilla",
          "tag" : "",
-         "gitPath" : "legoandmars/Utilla",
+         "gitPath" : "iiDk-the-actual/Utilla-Public",
          "releaseId" : 0,
-         "author" : "Bobbie",
+         "author" : "Bobbie, iiDk",
          "group" : "Libraries"
       },
       {
